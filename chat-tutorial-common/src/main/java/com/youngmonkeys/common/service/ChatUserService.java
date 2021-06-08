@@ -2,6 +2,8 @@ package com.youngmonkeys.common.service;
 
 import com.youngmonkeys.common.entity.ChatUser;
 
+import java.util.List;
+
 public interface ChatUserService {
 
     void saveUser(ChatUser user);
@@ -10,4 +12,5 @@ public interface ChatUserService {
 
     ChatUser getUser(String username);
 
+    List<ChatUser> getAllUsers();
 }

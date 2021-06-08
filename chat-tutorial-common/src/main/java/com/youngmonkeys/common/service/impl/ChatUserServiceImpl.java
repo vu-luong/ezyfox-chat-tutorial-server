@@ -8,6 +8,8 @@ import com.youngmonkeys.common.service.ChatMaxIdService;
 import com.youngmonkeys.common.service.ChatUserService;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @EzySingleton("userService")
 public class ChatUserServiceImpl implements ChatUserService {
@@ -36,5 +38,10 @@ public class ChatUserServiceImpl implements ChatUserService {
     @Override
     public ChatUser getUser(String username) {
         return chatUserRepo.findByField("username", username);
+    }
+
+    @Override
+    public List<ChatUser> getAllUsers() {
+        return chatUserRepo.findAll();
     }
 }

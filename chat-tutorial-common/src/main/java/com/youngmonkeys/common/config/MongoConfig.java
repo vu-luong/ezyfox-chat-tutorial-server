@@ -41,9 +41,7 @@ public class MongoConfig extends EzyLoggable
                 .properties(properties)
                 .mongoClient(newMongoClient())
                 .databaseName(databaseName)
-                .scan("com.youngmonkeys.common.repo")
-                .scan("com.youngmonkeys.common.service")
-                .scan("com.youngmonkeys.common.entity")
+                .scan("com.youngmonkeys")
                 .build();
     }
 

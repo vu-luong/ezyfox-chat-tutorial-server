@@ -40,7 +40,7 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
     public List<ChatChannelUsers> getChannelsOfUser(List<Long> channelIds, String username) {
         List<ChatChannelUser> list = channelUserRepo.findByChannelIds(channelIds);
 
-        Map<Long, Set<String>> map = mapChannelUser(list);
+        Map<Long, Set<String>> map = mapChannelUsers(list);
 
         List<ChatChannelUsers> answer = new ArrayList<>();
         for (Long id : map.keySet()) {
@@ -55,7 +55,14 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
         channelUserRepo.save(channelUsers);
     }
 
-    private Map<Long, Set<String>> mapChannelUser(List<ChatChannelUser> list) {
+    @Override
+    public ChatChannelUsers getChannelUsers(long channelId) {
+        List<ChatChannelUser> list = channelUserRepo.findByChannelId(channelId);
+        Map<Long, Set<String>> map = mapChannelUsers(list);
+        return new ChatChannelUsers(channelId, map.get(channelId));
+    }
+
+    private Map<Long, Set<String>> mapChannelUsers(List<ChatChannelUser> list) {
         Map<Long, Set<String>> map = new HashMap<>();
         for (ChatChannelUser item : list) {
             map.computeIfAbsent(item.getId().getChannelId(), k -> new HashSet<>());

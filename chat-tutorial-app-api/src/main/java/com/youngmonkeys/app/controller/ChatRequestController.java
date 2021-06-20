@@ -12,9 +12,12 @@ import com.youngmonkeys.app.data.ChatContact;
 import com.youngmonkeys.app.entity.ChatChannel;
 import com.youngmonkeys.app.entity.ChatChannelUser;
 import com.youngmonkeys.app.entity.ChatChannelUserId;
+import com.youngmonkeys.app.entity.ChatMessage;
 import com.youngmonkeys.app.request.GetChannelRequest;
+import com.youngmonkeys.app.request.MessageRequest;
 import com.youngmonkeys.app.service.ChatChannelService;
 import com.youngmonkeys.app.service.ChatChannelUserService;
+import com.youngmonkeys.app.service.ChatMessageService;
 import com.youngmonkeys.common.entity.ChatUser;
 import com.youngmonkeys.common.service.ChatUserService;
 
@@ -27,16 +30,22 @@ import java.util.Set;
 public class ChatRequestController extends EzyLoggable {
 
     @EzyAutoBind
-    ChatUserService userService;
+    private ChatUserService userService;
 
     @EzyAutoBind
-    ChatChannelUserService channelUserService;
+    private ChatChannelUserService channelUserService;
 
     @EzyAutoBind
-    ChatChannelService channelService;
+    private ChatChannelService channelService;
 
     @EzyAutoBind
-    EzyResponseFactory responseFactory;
+    private ChatMessageService messageService;
+
+    @EzyAutoBind
+    private EzyResponseFactory responseFactory;
+
+    public ChatRequestController() {
+    }
 
     @EzyDoHandle(Commands.GET_ALL_USERS)
     public void getAllUsers(EzyUser client) {
@@ -101,6 +110,34 @@ public class ChatRequestController extends EzyLoggable {
                 .user(client)
                 .execute();
 
+    }
+
+    @EzyDoHandle(Commands.SEND_MESSAGE)
+    public void sendMessage(EzyUser client, MessageRequest request) {
+        logger.info("Receive sendMessage request");
+
+        long channelId = request.getChannelId();
+        String messageContent = request.getMessage();
+
+        ChatChannelUsers channelUsers = channelUserService.getChannelUsers(channelId);
+
+        // Create and save a new message
+        ChatMessage message = messageService.newMessage(
+                channelId,
+                messageContent,
+                client.getName()
+        );
+        messageService.saveMessage(message);
+
+        List<ChatMessage> channelMessages = messageService.getChannelMessages(channelId);
+
+        responseFactory.newObjectResponse()
+                .command(Commands.SEND_MESSAGE)
+                .param("from", client.getName())
+                .param("chatLogs", channelMessages)
+                .param("channelId", channelId)
+                .usernames(channelUsers.getUsernames())
+                .execute();
     }
 
 }

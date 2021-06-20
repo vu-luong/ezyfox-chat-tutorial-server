@@ -13,4 +13,6 @@ public interface ChatChannelUserService {
     List<ChatChannelUsers> getChannelsOfUser(List<Long> channelIds, String username);
 
     void saveChannelUsers(List<ChatChannelUser> channelUsers);
+
+    ChatChannelUsers getChannelUsers(long channelId);
 }

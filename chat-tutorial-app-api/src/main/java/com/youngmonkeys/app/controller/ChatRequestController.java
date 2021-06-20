@@ -104,9 +104,12 @@ public class ChatRequestController extends EzyLoggable {
             channelUserService.saveChannelUsers(newChannelUsers);
         }
 
+        List<ChatMessage> channelMessages = messageService.getChannelMessages(channelId);
+
         responseFactory.newObjectResponse()
                 .command(Commands.GET_CHANNEL)
                 .param("channelId", channelId)
+                .param("chatLogs", channelMessages)
                 .user(client)
                 .execute();
 

@@ -22,7 +22,7 @@
 	<applications>
         <application>
 			<name>chat-tutorial</name>
-			<folder>chat-tutorial-app</folder>
+			<folder>chat-tutorial-app-entry</folder>
 			<entry-loader>com.youngmonkeys.app.AppEntryLoader</entry-loader>
 			<config-file>config/config.properties</config-file>
 		</application>

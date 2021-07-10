@@ -8,7 +8,7 @@ public class AppEntryLoader extends EzyAbstractAppEntryLoader {
 
 	@Override
 	public EzyAppEntry load() throws Exception {
-		return EzyClasses.newInstance("com.youngmonkeys.AppEntry");
+		return EzyClasses.newInstance("com.youngmonkeys.app.AppEntry");
 	}
 
 }

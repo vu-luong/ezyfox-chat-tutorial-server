@@ -1,4 +1,4 @@
-#export EZYFOX_SERVER_HOME=
+export EZYFOX_SERVER_HOME='/Users/youngmonkeys/Desktop/ezyfox-server'
 mvn -pl . clean install
 mvn -pl chat-tutorial-common -Pexport clean install
 mvn -pl chat-tutorial-app-api -Pexport clean install

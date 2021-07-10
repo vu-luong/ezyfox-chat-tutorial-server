@@ -1,1 +1,6 @@
 .idea/*
+chat-tutorial-app-api/target/
+chat-tutorial-app-entry/target/
+chat-tutorial-common/target/
+chat-tutorial-plugin/target/
+chat-tutorial-startup/target/
